@@ -1,0 +1,95 @@
+# 1. All permutations of a list of number
+
+# Javascript program to print all permutations of a given string of numbers
+function permute(str, l, r)
+# takes 3 parameters
+# string, the starting index of the string, and the ending index of the string
+  { if (l == r)
+      document.write(str + "<br>");
+    else
+    { for (let i = l; i <= r; i++)
+        { str = swap(str, l, i); # swapping function called
+          permute(str, l + 1, r); # made recursive
+          str = swap(str, l, i); # backtracking
+        }
+      }
+  }
+
+function swap(a, i, j) # swapping of the positions
+  { let temp;
+    let charArray = a.split("");
+    temp = charArray[i] ;
+    charArray[i] = charArray[j];
+    charArray[j] = temp;
+    return (charArray).join("");
+  }
+
+let n = str.size;
+permute(str, 0, n-1);
+
+
+
+
+# 2. Declare a class of SortedArray
+
+class SortedArray
+
+  def initialize(arr)
+    @arr = arr
+  end
+
+  def sorted
+    sorted = []
+    @arr.size.times do
+      min = @arr[0]
+      @arr.each { |num| min = num if num < min }
+      sorted << min
+    end
+    @arr = sorted
+  end
+
+  def reversed
+    reversed = []
+    @arr.size.times do
+      max = @arr[0]
+      @arr.each { |num| max = num if num > max }
+      reversed << max
+    end
+    return reversed
+  end
+end
+
+
+# 3. Generate a file
+
+# goal : create a program that generates a file of a specified size (the size N in Mb)
+
+# the pseudocode :
+# 1. build a code that generates hex numbers
+
+# 2. calculate how many hex numbers (each are 8b) is needed to reach N Mb
+  # 1 MB = 10^6 B in base 10 = 1000000 bytes (decimal)
+  # base = 16
+const generateHexSequence = (targetMb) => {
+    // 1MB = 1000 * 1000 bytes
+    targetByte = targetMb * 10**6
+    const upperEnd = Math.round(targetByte / 8)
+    return [...Array(upperEnd).keys()].map(num => {
+        const hex = num.toString(16)
+        return hex.padStart(8, '0')
+    }).join('')
+}
+
+# 3. generate those numbers and store them in a new file
+const generateFile = (targetMb) => {
+    const text = generateHexSequence(targetMb);
+    var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    var link = window.URL.createObjectURL(blob);
+    const a = document.createElement('a')
+    a.href = link
+    a.setAttribute('download', 'file.txt')
+    a.click()
+    window.URL.revokeObjectURL(link.href)
+}
+
+generateFile(100)
